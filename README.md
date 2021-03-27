@@ -2,7 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/git.iglou.eu/Production/go-yapla)](https://goreportcard.com/report/git.iglou.eu/Production/go-yapla)
 [![Go Reference](https://img.shields.io/badge/api-reference-blue)](https://pkg.go.dev/git.iglou.eu/Production/go-yapla)
-[![Apache V2 License](https://img.shields.io/badge/coverage-87.7%-green)](https://opensource.org/licenses/MIT)
+[![Go coverage](https://img.shields.io/badge/coverage-87.7%-green)](https://img.shields.io)
 [![Apache V2 License](https://img.shields.io/badge/licence-MIT-9cf)](https://opensource.org/licenses/MIT)
 
 Support Yapla **API 2.0**    

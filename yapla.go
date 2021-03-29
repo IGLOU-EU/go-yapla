@@ -13,14 +13,25 @@ import (
 	"time"
 )
 
+// Api denotes the Yapla API client session.
 type Api struct {
-	key    string
-	token  token
+	key   string
+	token token
+
+	// Api setting, see Config struct.
 	Config Config
 }
 
+// Config is a struct holding the api setting.
 type Config struct {
-	URL     string
+	// Base URL to target API server.
+	//
+	// Default: "https://s1.yapla.com/api/2"
+	URL string
+
+	// The maximum amount of time to wait for the end of the request.
+	//
+	// Default: time.Second * 10
 	Timeout time.Duration
 }
 
@@ -29,15 +40,41 @@ type token struct {
 	Expire time.Time
 }
 
+// Reply is a struct holding the api response
 type Reply struct {
-	Result bool                   `json:"result"`
-	Data   map[string]interface{} `json:"data"`
+	// Status of actual request
+	//
+	// Sucess = true
+	Result bool `json:"result"`
+
+	// Due to inconsistent data structure, this is a map of interface
+	//
+	// Success response can be ... anything
+	// Data: {
+	//	 string: string/[]interface{},
+	// }
+	//
+	// Error response are "consistent"
+	// Data: {
+	//	 "code": 524,
+	//	 "type": "error_bad_login_pawssord",
+	//	 "message": "Error's message",
+	// }
+	//
+	// Can be string or sub map
+	Data map[string]interface{} `json:"data"`
 }
 
+// LoginMember
+// Login to your Yapla account
+// Using for access to all informations about this member
 func (api *Api) LoginMember(login, password string) (Reply, error) {
 	return api.login("/member/login", login, password)
 }
 
+// LoginContact
+// login to your Yapla account
+// Using for access to all informations about this contact
 func (api *Api) LoginContact(login, password string) (Reply, error) {
 	return api.login("/contact/login", login, password)
 }
@@ -90,6 +127,17 @@ func (api *Api) renewToken() error {
 	return nil
 }
 
+// NewSession
+// Create a named client connection with Yapla v2.0 API
+// Authenticate admin Yapla and get Session token
+// You can pass optional configuration options with Config struct:
+//   y := yappla.NewSession(
+//		  "xxxxxxxxxxxxxxx"
+//	  	  fiber.Config{
+//      	  URL: "https://s2.yapla.com/api/2",
+//      	  Timeout: time.Second * 30,
+//		  },
+//   )
 func NewSession(apiKey string, config ...Config) (*Api, error) {
 	api := &Api{
 		key: apiKey,

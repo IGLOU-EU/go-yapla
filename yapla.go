@@ -50,7 +50,7 @@ func (api *Api) login(path, login, password string) (Reply, error) {
 	}
 
 	rep, err := requestPost(
-		"/authentication",
+		path,
 		api.token.Key,
 		map[string]string{"login": login, "password": password},
 		api.Config,

@@ -44,7 +44,7 @@ type token struct {
 type Reply struct {
 	// Status of actual request
 	//
-	// Sucess = true
+	// Success = true
 	Result bool `json:"result"`
 
 	// Due to inconsistent data structure, this is a map of interface
@@ -65,15 +65,13 @@ type Reply struct {
 	Data map[string]interface{} `json:"data"`
 }
 
-// LoginMember
-// Login to your Yapla account
+// LoginMember login to your Yapla account
 // Using for access to all informations about this member
 func (api *Api) LoginMember(login, password string) (Reply, error) {
 	return api.login("/member/login", login, password)
 }
 
-// LoginContact
-// login to your Yapla account
+// LoginContact login to your Yapla account
 // Using for access to all informations about this contact
 func (api *Api) LoginContact(login, password string) (Reply, error) {
 	return api.login("/contact/login", login, password)
@@ -127,9 +125,8 @@ func (api *Api) renewToken() error {
 	return nil
 }
 
-// NewSession
-// Create a named client connection with Yapla v2.0 API
-// Authenticate admin Yapla and get Session token
+// NewSession create a named client connection with Yapla v2.0 API
+// Authenticate admin Yapla and set Session token
 // You can pass optional configuration options with Config struct:
 //   y := yappla.NewSession(
 //		  "xxxxxxxxxxxxxxx"
